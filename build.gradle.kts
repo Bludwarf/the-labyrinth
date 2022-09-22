@@ -5,7 +5,7 @@ plugins {
     application
 }
 
-group = "com.codingame.game"
+group = "com.codingame"
 version = "1.0-SNAPSHOT"
 
 repositories {

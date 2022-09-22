@@ -1,28 +1,31 @@
+import com.codingame.thelabyrinth.Input
+import com.codingame.thelabyrinth.Kirk
+import com.codingame.thelabyrinth.DirectionResolver
+import com.codingame.thelabyrinth.Printer
 import java.util.*
-import java.io.*
-import java.math.*
 
 /**
  * Auto-generated code below aims at helping you parse
  * the standard input according to the problem statement.
  **/
-fun main(args : Array<String>) {
-    val input = Scanner(System.`in`)
-    val R = input.nextInt() // number of rows.
-    val C = input.nextInt() // number of columns.
-    val A = input.nextInt() // number of rounds between the time the alarm countdown is activated and the time the alarm goes off.
+fun main() {
+    val input = Input(Scanner(System.`in`))
+    val structureHeight = input.nextInt() // number of rows.
+    val structureWidth = input.nextInt() // number of columns.
+    val countdown = input.nextInt() // number of rounds between the time the alarm countdown is activated and the time the alarm goes off.
+    val debugPrinter = Printer(System.err)
+    val kirk = Kirk()
 
     // game loop
     while (true) {
-        val KR = input.nextInt() // row where Rick is located.
-        val KC = input.nextInt() // column where Rick is located.
-        for (i in 0 until R) {
-            val ROW = input.next() // C of the characters in '#.TC?' (i.e. one line of the ASCII maze).
-        }
+        kirk.position = input.nextPosition()
+        debugPrinter.println(kirk.state)
 
-        // Write an action using println()
-        // To debug: System.err.println("Debug messages...");
+        val structure = input.nextStructure(structureHeight, structureWidth)
+        debugPrinter.println(structure)
 
-        println("RIGHT") // Rick's next move (UP DOWN LEFT or RIGHT).
+        val directionResolver = DirectionResolver(structure, kirk)
+
+        println(directionResolver.nextDirection) // Rick's next move (UP DOWN LEFT or RIGHT).
     }
 }
