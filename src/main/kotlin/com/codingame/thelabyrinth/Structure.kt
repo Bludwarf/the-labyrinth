@@ -4,7 +4,7 @@ data class Structure(val grid: Grid) {
 
     operator fun get(x: Int, y: Int): Cell = grid[x, y]
 
-    private fun neighborsOf(position: Position): Sequence<Cell> {
+    fun neighborsOf(position: Position): Sequence<Cell> {
         val (x, y) = position
         return sequence {
             if (x > 0) {

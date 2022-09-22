@@ -2,7 +2,7 @@ package com.codingame.thelabyrinth
 
 class DirectionResolver(private val structure: Structure, private val kirk: Kirk) {
 
-    private val pathFinder = PathFinder()
+    private val pathFinder = PathFinder(structure)
 
     val nextDirection: Direction by lazy {
         when (kirk.state) {

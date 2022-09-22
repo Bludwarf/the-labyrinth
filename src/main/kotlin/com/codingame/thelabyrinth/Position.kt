@@ -17,6 +17,10 @@ data class Position(val x: Int, val y: Int) {
         return sqrt(abs(position.x - x).toDouble().pow(2) + abs(position.y - y).toDouble().pow(2))
     }
 
+    fun squareDistanceWith(position: Position): Int {
+        return abs(position.x - x) + abs(position.y - y)
+    }
+
     fun directionOf(position: Position): Direction {
         val (x1, y1) = position
         return if (x1 < x) {

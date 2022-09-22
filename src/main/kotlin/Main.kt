@@ -29,3 +29,6 @@ fun main() {
         println(directionResolver.nextDirection) // Rick's next move (UP DOWN LEFT or RIGHT).
     }
 }
+
+fun debug(string: String) = System.err.println(string)
+fun debug(x: Any) = System.err.println(x)
