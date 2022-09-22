@@ -38,6 +38,7 @@ class PathFinder(private val structure: Structure) {
 
             val neighbors = structure.neighborsOf(current)
                 .filter { it !is Wall }
+                .filter { it !is NotScannedCell }
                 .map { it.position }
             for (next in neighbors) {
                 val newCost = (costSoFar[current] ?: 0) + cost(current, next)

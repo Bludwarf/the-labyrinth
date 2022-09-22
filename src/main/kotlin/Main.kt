@@ -19,10 +19,10 @@ fun main() {
     // game loop
     while (true) {
         kirk.position = input.nextPosition()
-        debugPrinter.println(kirk.state)
+//        debugPrinter.println(kirk.state)
 
         val structure = input.nextStructure(structureHeight, structureWidth)
-        debugPrinter.println(structure)
+//        debugPrinter.println(structure)
 
         val directionResolver = DirectionResolver(structure, kirk)
 

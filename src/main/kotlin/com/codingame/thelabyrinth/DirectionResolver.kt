@@ -1,5 +1,7 @@
 package com.codingame.thelabyrinth
 
+import debug
+
 class DirectionResolver(private val structure: Structure, private val kirk: Kirk) {
 
     private val pathFinder = PathFinder(structure)
@@ -7,7 +9,13 @@ class DirectionResolver(private val structure: Structure, private val kirk: Kirk
     val nextDirection: Direction by lazy {
         when (kirk.state) {
             State.EXPLORING -> if (structure.commandRoomIsVisible) {
-                goToCommandRoom()
+                if (kirk.positionsToVisit.isEmpty()) {
+                    goToCommandRoom()
+                } else {
+                    debug("Command room found. Exploring all structure before...")
+                    kirk.positionsToVisit -= structure.commandRoomPosition!!
+                    explore()
+                }
             } else {
                 explore()
             }
@@ -31,11 +39,19 @@ class DirectionResolver(private val structure: Structure, private val kirk: Kirk
     private fun explore(): Direction {
         kirk.state = State.EXPLORING
         kirk.visitedPositions += kirk.position
-        kirk.positionsToVisit = structure.emptyCellsAround(kirk.position)
+        kirk.positionsToVisit = (structure.emptyCellsAround(kirk.position)
             .map { it.position }
+            .toList() + kirk.positionsToVisit)
             .filter { !kirk.visitedPositions.contains(it) }
-            .toList() + kirk.positionsToVisit - kirk.position
-        return goTo(kirk.positionsToVisit.first())
+        debug("kirk.positionsToVisit")
+        debug(kirk.positionsToVisit)
+        val nextPositionToVisit = kirk.positionsToVisit.firstOrNull()
+            ?: return if (structure.commandRoomIsVisible) {
+                goToCommandRoom()
+            } else {
+                throw Throwable("Nothing to explore !")
+            }
+        return goTo(nextPositionToVisit)
     }
 
     private fun goTo(position: Position): Direction {
