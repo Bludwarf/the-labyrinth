@@ -40,6 +40,7 @@ class PathFinder(private val structure: Structure) {
                 .filter { it !is Wall }
                 .filter { it !is NotScannedCell }
                 .map { it.position }
+                .filter { it == goal || it != structure.commandRoomPosition }
             for (next in neighbors) {
                 val newCost = (costSoFar[current] ?: 0) + cost(current, next)
                 if (costSoFar[next] == null || newCost < (costSoFar[next] ?: 0)) {
